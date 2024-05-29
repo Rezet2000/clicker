@@ -18,7 +18,9 @@ class Client:
         [print(f'event: {item}') for item in self.event_list]
 
     def run_events(self):
+        self.master.iconify()
         Runner(self.event_list).run_events()
+        self.master.deiconify()
 
 
 
