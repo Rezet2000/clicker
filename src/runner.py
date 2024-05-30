@@ -22,7 +22,7 @@ class Runner:
                         pyautogui.press(item['key_value'])
                     if item['event'] == 'click':
                         pyautogui.click(item['key_value'][0], item['key_value'][1])
-                    time.sleep(item[2])
+                    time.sleep(item['time'])
 
         # Once the loop ends, stop the listener
         keyboard_listener.stop()
