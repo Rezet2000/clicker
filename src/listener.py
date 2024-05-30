@@ -17,21 +17,28 @@ class Listener:
 
         def on_click(x, y, button, pressed):
             if not pressed:
-                self.events.append(('click', [x, y], track_time()))
-
+                self.events.append({
+                    'event': 'click', 
+                    'key_value': [x, y], 
+                    'time': track_time()
+                })
 
         # Keyboard recorder
         def on_release(key):
             # TO-D0: change verification of special keys, not by capturing the exception
             try:
                 if key != keyboard.Key.esc:
-                    self.events.append(('press', key.char, track_time()))
+                    press_key = key.name if hasattr(key, 'name') else key.char
+                    self.events.append({
+                        'event': 'press', 
+                        'key_value': press_key, 
+                        'time': track_time()
+                    })
                 else:
-                    # Stop listener
                     mouse_listener.stop()
                     return False
             except AttributeError:
-                self.events.append(('press', key.name, track_time()))
+                print('key not supported')
 
         # Collect events until released
         with keyboard.Listener(

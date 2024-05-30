@@ -18,11 +18,10 @@ class Runner:
                 for item in self.event_list:
                     if not self.running:
                         break
-                    print(item[1])
-                    if item[0] == 'press':
-                        pyautogui.press(item[1])
-                    if item[0] == 'click':
-                        pyautogui.click(item[1][0], item[1][1])
+                    if item['event'] == 'press':
+                        pyautogui.press(item['key_value'])
+                    if item['event'] == 'click':
+                        pyautogui.click(item['key_value'][0], item['key_value'][1])
                     time.sleep(item[2])
 
         # Once the loop ends, stop the listener
