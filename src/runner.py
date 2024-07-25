@@ -3,26 +3,28 @@ import pyautogui
 from pynput import keyboard
 
 class Runner:
-    def __init__(self, event_list) -> None:
-        self.event_list = event_list
+    def __init__(self) -> None:
         self.running = True
 
     def stop_runner(self, key):
         if key == keyboard.Key.esc:
             self.running = False
-            return False  # Stop the listener
+            return False
 
-    def run_events(self):
+    def run_events(self, event_list):
         with keyboard.Listener(on_release=self.stop_runner) as keyboard_listener:
             while self.running:
-                for item in self.event_list:
+                for item in event_list:
                     if not self.running:
                         break
-                    if item['event'] == 'press':
-                        pyautogui.press(item['key_value'])
-                    if item['event'] == 'click':
-                        pyautogui.click(item['key_value'][0], item['key_value'][1])
                     time.sleep(item['time'])
+                    try:
+                        if item['event'] == 'press':
+                            pyautogui.press(item['key_value'])
+                        if item['event'] == 'click':
+                            pyautogui.click(item['key_value'][0], item['key_value'][1])
+                    except Exception as e:
+                        raise Exception('Something went wrong...', e)
 
         # Once the loop ends, stop the listener
         keyboard_listener.stop()

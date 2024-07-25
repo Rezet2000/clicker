@@ -25,7 +25,6 @@ class Listener:
 
         # Keyboard recorder
         def on_release(key):
-            # TO-D0: change verification of special keys, not by capturing the exception
             try:
                 if key != keyboard.Key.esc:
                     press_key = key.name if hasattr(key, 'name') else key.char
