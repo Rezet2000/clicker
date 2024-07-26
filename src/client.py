@@ -1,6 +1,6 @@
-from listener import Listener
-from runner import Runner
-from screen_drawer import ScreenDrawer
+from src.listener import Listener
+from src.runner import Runner
+from src.screen_drawer import ScreenDrawer
 from PyQt5.QtWidgets import QApplication
 import sys
 
@@ -23,6 +23,7 @@ class Client:
         points = [point['key_value'] for point in self.event_list if point['event'] == 'click']
         if self.screen_drawer:
             self.screen_drawer.close()
+            return
         self.screen_drawer = ScreenDrawer(points)
         self.screen_drawer.show()
         self.screen_drawer.closeEvent = self.on_screen_drawer_close
