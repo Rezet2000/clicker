@@ -14,6 +14,9 @@ class Client:
         self.screen_drawer = None
         
     def record_events(self):
+        if self.screen_drawer:
+            self.screen_drawer.close()
+        self.event_list = [] # Clear even_list to not overlap event lists
         self.window.iconify()
         self.event_list = self.listener.listen()
         self.window.deiconify()

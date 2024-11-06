@@ -6,7 +6,7 @@ class Listener:
         self.events = []
 
     def listen(self):
-
+        self.events = [] # Clear events to not overlap event recordings
         start_time = time.time()
 
         def track_time():

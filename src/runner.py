@@ -13,6 +13,7 @@ class Runner:
 
     def run_events(self, event_list):
         with keyboard.Listener(on_release=self.stop_runner) as keyboard_listener:
+            self.running = True
             while self.running:
                 for item in event_list:
                     if not self.running:
@@ -22,7 +23,7 @@ class Runner:
                         if item['event'] == 'press':
                             pyautogui.press(item['key_value'])
                         if item['event'] == 'click':
-                            pyautogui.click(item['key_value'][0], item['key_value'][1])
+                            pyautogui.click(*item['key_value'])
                     except Exception as e:
                         raise Exception('Something went wrong...', e)
 
