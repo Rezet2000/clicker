@@ -2,6 +2,8 @@ from src.listener import Listener
 from src.runner import Runner
 from src.screen_drawer import ScreenDrawer
 from PyQt5.QtWidgets import QApplication
+import json
+import pickle
 import sys
 
 class Client:
@@ -16,7 +18,7 @@ class Client:
     def record_events(self):
         if self.screen_drawer:
             self.screen_drawer.close()
-        self.event_list = [] # Clear even_list to not overlap event lists
+        self.event_list = [] # Clear event_list to not overlap event lists
         self.window.iconify()
         self.event_list = self.listener.listen()
         self.window.deiconify()
@@ -41,3 +43,11 @@ class Client:
         self.window.iconify()
         self.runner.run_events(self.event_list)
         self.window.deiconify()
+    
+    def save_events(self):
+        with open('events.pkl', 'wb') as file:
+            pickle.dump(self.event_list, file)
+    
+    def load_events(self):
+        with open('events.pkl', 'rb') as file:
+            self.event_list = pickle.load(file)

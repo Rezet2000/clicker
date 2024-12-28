@@ -15,6 +15,8 @@ class Runner:
         with keyboard.Listener(on_release=self.stop_runner) as keyboard_listener:
             self.running = True
             while self.running:
+                if event_list == []:
+                    break
                 for item in event_list:
                     if not self.running:
                         break
