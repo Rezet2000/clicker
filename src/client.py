@@ -1,8 +1,8 @@
-from src.listener import Listener
-from src.runner import Runner
-from src.screen_drawer import ScreenDrawer
+from listener import Listener
+from runner import Runner
+from screen_drawer import ScreenDrawer
 from PyQt5.QtWidgets import QApplication
-import json
+import os
 import pickle
 import sys
 
@@ -45,9 +45,15 @@ class Client:
         self.window.deiconify()
     
     def save_events(self):
-        with open('events.pkl', 'wb') as file:
+        # to get user
+        user_profile = os.path.join(os.environ['USERPROFILE'])
+        # to get documents
+        documents_folder = os.path.join(user_profile, 'Documents')
+        with open(os.path.join(documents_folder, 'events.pkl'), 'wb') as file:
             pickle.dump(self.event_list, file)
     
     def load_events(self):
-        with open('events.pkl', 'rb') as file:
+        user_profile = os.path.join(os.environ['USERPROFILE'])
+        documents_folder = os.path.join(user_profile, 'Documents')
+        with open(os.path.join(documents_folder, 'events.pkl'), 'rb') as file:
             self.event_list = pickle.load(file)

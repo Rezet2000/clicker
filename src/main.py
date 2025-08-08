@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
-from src.client import Client
+from client import Client
 
 class MainWindow(QMainWindow):
     def __init__(self):
