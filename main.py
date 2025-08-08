@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
 from src.client import Client
@@ -8,22 +8,23 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Sets screen interface parameters
+        # Sets main screen interface parameters
         self.setWindowTitle('Clicker')
         self.setGeometry(100, 100, 300, 200)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.setWindowIcon(QtGui.QIcon('src/assets/logo.png'))
 
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        self.layout = QVBoxLayout(self.central_widget)
+        # Widgets
+        horizontal_main_layout = QHBoxLayout()
+        left_layout = QVBoxLayout()
+        right_layout = QVBoxLayout()
 
         # Events recorder client
         self.client = Client(self)
 
         def create_button(button, method):
             button.clicked.connect(method)
-            self.layout.addWidget(button)
+            left_layout.addWidget(button)
 
         # Adds 'Start recording' button to screen
         create_button(QPushButton('Start recording', self), self.client.record_events)
@@ -35,6 +36,17 @@ class MainWindow(QMainWindow):
         create_button(QPushButton('Load events', self), self.client.load_events)
         # Saves events
         create_button(QPushButton('Save events', self), self.client.save_events)
+
+
+        label = QLabel('Label')
+        right_layout.addWidget(label)
+
+        horizontal_main_layout.addLayout(left_layout)
+        horizontal_main_layout.addLayout(right_layout)
+
+        main_widget = QWidget()
+        main_widget.setLayout(horizontal_main_layout)
+        self.setCentralWidget(main_widget)
 
     # Minimizes window
     def iconify(self):
