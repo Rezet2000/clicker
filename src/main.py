@@ -17,7 +17,6 @@ class MainWindow(QMainWindow):
         # Widgets
         horizontal_main_layout = QHBoxLayout()
         left_layout = QVBoxLayout()
-        right_layout = QVBoxLayout()
 
         # Events recorder client
         self.client = Client(self)
@@ -37,12 +36,7 @@ class MainWindow(QMainWindow):
         # Saves events
         create_button(QPushButton('Save events', self), self.client.save_events)
 
-
-        label = QLabel('Label')
-        right_layout.addWidget(label)
-
         horizontal_main_layout.addLayout(left_layout)
-        horizontal_main_layout.addLayout(right_layout)
 
         main_widget = QWidget()
         main_widget.setLayout(horizontal_main_layout)

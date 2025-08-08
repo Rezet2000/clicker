@@ -45,9 +45,7 @@ class Client:
         self.window.deiconify()
     
     def save_events(self):
-        # to get user
         user_profile = os.path.join(os.environ['USERPROFILE'])
-        # to get documents
         documents_folder = os.path.join(user_profile, 'Documents')
         with open(os.path.join(documents_folder, 'events.pkl'), 'wb') as file:
             pickle.dump(self.event_list, file)
