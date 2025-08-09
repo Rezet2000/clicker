@@ -20,24 +20,30 @@ class Listener:
                 self.events.append({
                     'event': 'click', 
                     'key_value': [x, y], 
-                    'time': track_time()
+                    'time': track_time(),
+                    'count': 0
                 })
         
         def on_press(key):
             press_key = key.name if hasattr(key, 'name') else key.char
             print('key pressed:', press_key)
             if self.events:
-                if self.events[-1]['event'] != 'press' and self.events[-1]['key_value'] != press_key:
+                if self.events[-1]['event'] == 'press' and self.events[-1]['key_value'] == press_key:
+                    self.events[-1]['count'] += 1
+                    print('add 1 to count')
+                else:
                     self.events.append({
                         'event': 'press', 
                         'key_value': press_key, 
                         'time': 0,
+                        'count': 1
                     })
             else:
                 self.events.append({
                     'event': 'press', 
                     'key_value': press_key, 
                     'time': 0,
+                    'count': 1,
                 })
 
         # Keyboard recorder
@@ -46,7 +52,6 @@ class Listener:
                 if key != keyboard.Key.esc:
                     press_key = key.name if hasattr(key, 'name') else key.char
                     print('key released:', press_key)
-                    print(self.events)
                     self.events[-1]['event'] = 'release'
                     self.events[-1]['time'] = track_time()
                 else:

@@ -23,10 +23,15 @@ class Runner:
                     try:
                         if item['event'] == 'release':
                             print('key down:', item['key_value'])
-                            pyautogui.press(item['key_value'])
-                            print('hold_time', item['time'])
-                            time.sleep(item['time'])
-                            print('key up:', item['key_value'])
+                            timer = item['time'] / item['count']
+                            print(item['count'])
+                            print(timer)
+                            temp = 0
+                            while item['time'] >= temp:
+                                pyautogui.press(item['key_value'])
+                                print('hold_time', item['time'])
+                                time.sleep((timer/2))
+                                temp += timer
                         if item['event'] == 'click':
                             print('Click:', item['key_value'])
                             time.sleep(item['time'])
