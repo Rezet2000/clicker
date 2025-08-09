@@ -20,11 +20,16 @@ class Runner:
                 for item in event_list:
                     if not self.running:
                         break
-                    time.sleep(item['time'])
                     try:
-                        if item['event'] == 'press':
+                        if item['event'] == 'release':
+                            print('key down:', item['key_value'])
                             pyautogui.press(item['key_value'])
+                            print('hold_time', item['time'])
+                            time.sleep(item['time'])
+                            print('key up:', item['key_value'])
                         if item['event'] == 'click':
+                            print('Click:', item['key_value'])
+                            time.sleep(item['time'])
                             pyautogui.click(*item['key_value'])
                     except Exception as e:
                         raise Exception('Something went wrong...', e)

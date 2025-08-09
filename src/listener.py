@@ -22,17 +22,33 @@ class Listener:
                     'key_value': [x, y], 
                     'time': track_time()
                 })
+        
+        def on_press(key):
+            press_key = key.name if hasattr(key, 'name') else key.char
+            print('key pressed:', press_key)
+            if self.events:
+                if self.events[-1]['event'] != 'press' and self.events[-1]['key_value'] != press_key:
+                    self.events.append({
+                        'event': 'press', 
+                        'key_value': press_key, 
+                        'time': 0,
+                    })
+            else:
+                self.events.append({
+                    'event': 'press', 
+                    'key_value': press_key, 
+                    'time': 0,
+                })
 
         # Keyboard recorder
         def on_release(key):
             try:
                 if key != keyboard.Key.esc:
                     press_key = key.name if hasattr(key, 'name') else key.char
-                    self.events.append({
-                        'event': 'press', 
-                        'key_value': press_key, 
-                        'time': track_time()
-                    })
+                    print('key released:', press_key)
+                    print(self.events)
+                    self.events[-1]['event'] = 'release'
+                    self.events[-1]['time'] = track_time()
                 else:
                     mouse_listener.stop()
                     return False
@@ -41,6 +57,7 @@ class Listener:
 
         # Collect events until released
         with keyboard.Listener(
+                on_press=on_press,
                 on_release=on_release) as keyboard_listener, \
             mouse.Listener(
                 on_click=on_click) as mouse_listener:
